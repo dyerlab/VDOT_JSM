@@ -13,6 +13,7 @@ library(colorspace)
 counties <- readRDS("counties.rds")
 roads <- readRDS("roads.rds")
 hsm <- readRDS("hsm_union.rds")
+df <- readRDS("df.rds")
 
 groupColors = colorFactor(palette = c("#7D0025", "#F39300", "#FDCC36"), domain = roads$ROAD_TYPE)
 
