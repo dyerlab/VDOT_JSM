@@ -1,0 +1,26 @@
+---
+title: "To-do"
+author: "Charis Deadwyler"
+date: "11/12/2020"
+output: html_document
+---
+
+* Add link to click event referencing lat/long in html
+
+
+ex. format:
+127.0.0.1:5767/?symbol=BBB,AAA,CCC,DDD&date_start=2005-01-02&period_select=2&smaLen=153&usema=1
+
+
+* mode buttons and slider above table
+
+* in side-bar talk about habitat suitbaility model
+  * plots of models
+  * click to bring up map
+  * click to bring up suitablilty model
+  * click to bring up background page
+  
+* basemap without roads/streams
+
+* option to load with different tile providers
+
