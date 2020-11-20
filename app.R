@@ -72,7 +72,7 @@ ui <- dashboardPage(
 
 
 
-my_server <- function(session, input, output) {
+server <- function(session, input, output) {
   
   df_r <- reactive({ as_tibble(df) })
   
@@ -192,6 +192,5 @@ my_server <- function(session, input, output) {
   
 }
 
-shinyApp( ui, server
-)
+shinyApp( ui, server )
 
