@@ -16,60 +16,60 @@ hsm <- readRDS("hsm_union.rds")
 
 groupColors = colorFactor(palette = c("#7D0025", "#F39300", "#FDCC36"), domain = roads$ROAD_TYPE)
 
-# ui
-my_sidebar <- dashboardSidebar(
-  width = 250,
-  sidebarMenu(
-    id = "menu_1",
-    br(),
-    actionButton(
-      "select_all_rows_button",
-      "Select All Table Rows"
-    ),
-    br(),
-    actionButton(
-      "clear_rows_button",
-      "Clear Table Selections"
-    ),
-    br(),
-    sliderInput("bins",
-                "JSM Habitat Suitability:",
-                min = min(df$JSM_suitab),
-                max = max(df$JSM_suitab),
-                value = min(df$JSM_suitab))
-  )
-)
-
-my_header <- dashboardHeader(title = "JSM Project")
-
-my_body <- dashboardBody(
+ui <- dashboardPage(
   
-  fluidRow(
-    box(
-      width = 12,
-      solidHeader = TRUE,
-      leafletOutput(
-        "my_leaflet"
-      )
+  dashboardHeader(
+    title = "JSM Project"
+    ),
+  
+  dashboardSidebar(
+    width = 250,
+    sidebarMenu(
+      id = "menu_1",
+      br(),
+      actionButton(
+        "select_all_rows_button",
+        "Select All Table Rows"
+      ),
+      br(),
+      actionButton(
+        "clear_rows_button",
+        "Clear Table Selections"
+      ),
+      br(),
+      sliderInput("bins",
+                  "JSM Habitat Suitability:",
+                  min = min(df$JSM_suitab),
+                  max = max(df$JSM_suitab),
+                  value = min(df$JSM_suitab))
     )
   ),
-  fluidRow(
-    box(
-      width = 12,
-      solidHeader = TRUE,
-      DTOutput(
-        "my_datatable"
+  
+  dashboardBody(
+    
+    fluidRow(
+      box(
+        width = 12,
+        solidHeader = TRUE,
+        leafletOutput(
+          "my_leaflet"
+        )
+      )
+    ),
+    fluidRow(
+      box(
+        width = 12,
+        solidHeader = TRUE,
+        DTOutput(
+          "my_datatable"
+        )
       )
     )
   )
+
 )
 
 
-my_ui <- dashboardPage(
-  header = my_header,
-  sidebar = my_sidebar,
-  body = my_body
-)
 
 my_server <- function(session, input, output) {
   
@@ -191,8 +191,6 @@ my_server <- function(session, input, output) {
   
 }
 
-shinyApp(
-  ui = my_ui,
-  server = my_server
+shinyApp( ui, server
 )
 
