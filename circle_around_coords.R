@@ -110,10 +110,10 @@ server <- function(input, output) {
   
   
   observe({
-    proxy = leafletProxy("map", data = input_pt()) %>% clearMarkers()
+    proxy = leafletProxy("map", data = input_pt()) %>% clearGroup("Circle")
     
     proxy %>%
-      clearMarkers() %>% 
+      clearGroup("Circle") %>% 
       addCircles(
         lng = input_pt()[, "X"],
         lat = input_pt()[, "Y"],
