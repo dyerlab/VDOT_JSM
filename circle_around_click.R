@@ -37,8 +37,8 @@ ui <- fluidPage(
   ),
   fluidRow(
     textOutput("coords")
-  
-)
+    
+  )
 )
 
 server <- function(input, output) {
