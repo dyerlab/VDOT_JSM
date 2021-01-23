@@ -35,7 +35,10 @@ ui <- fluidPage(
   fluidRow(
     leafletOutput("map", height= 500)
   ),
+  fluidRow(
+    textOutput("coords")
   
+)
 )
 
 server <- function(input, output) {
@@ -68,7 +71,7 @@ server <- function(input, output) {
       ) %>%
       # Add layer control options using group assignments
       addLayersControl(
-        overlayGroups = c("County Boundaries", "Streams", "Legend", "Circle"),
+        overlayGroups = c("County Boundaries", "Streams", "Legend", "Circle","Segments"),
         options = layersControlOptions(collapsed = FALSE)
       ) %>%
       addPolylines(
@@ -77,6 +80,7 @@ server <- function(input, output) {
         weight = 3,
         opacity = 1,
         stroke = TRUE,
+        highlightOptions = highlightOptions(color="orange", weight=4),
         group = "Segments",
         popup = paste0(
           "JSM Suitability: ", segments$suit, "<br>",
@@ -106,26 +110,35 @@ server <- function(input, output) {
   
   observeEvent(input$map_click, {
     
-    click <- input$map_click
-    text<-paste("Latitude ", round(click$lat,2), "Longtitude ", round(click$lng,2))
+    click = input$map_click
+    if(is.null(click))
+      return()
+    
+    text<-paste("Longtitude:", round(click$lng, digits=5),
+                "Latitude:", round(click$lat, digits = 5)  
+    )
+    text2 <- paste(" ", text)
+    
     
     proxy <- leafletProxy("map")
     
     ## This displays the pin drop circle
     proxy %>% 
       clearGroup("Circle") %>%
-      #clearMarkers(layerId=input$mymap_click$id) %>%
-      #addPopups(click$lng, click$lat) %>%
-      addCircles(click$lng, click$lat, radius=input$num, color="red", group = "Circle")
+      addCircles(click$lng, 
+                 click$lat, 
+                 radius=input$num, 
+                 color="red",
+                 fillColor = "transparent",
+                 group = "Circle")
     
-  })
-  
-  output$coords <- renderText({
-    paste0("Latitude:", click$lat, 
-          "Longitude:", click$lng
-          )
+    
+    
+    output$coords <- renderText({
+      (text2)
+    })
   })
   
 }
 # Run the application
-shinyApp(ui = ui, server = server) 
+shinyApp(ui = ui, server = server)
